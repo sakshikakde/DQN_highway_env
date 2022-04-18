@@ -21,6 +21,8 @@ from strategy import *
 from agent import *
 from env_manager import *
 from q_value import *
+from opts import *
+from train import *
 
 
 is_ipython = 'inline' in matplotlib.get_backend()

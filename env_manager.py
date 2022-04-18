@@ -55,6 +55,10 @@ class HighwayEnvManager():
         screen = self.get_processed_screen()
         return screen.shape[3]
 
+    def get_screen_stack(self):
+        screen = self.get_processed_screen()
+        return screen.shape[1]
+
     def get_processed_screen(self):
         screen = self.observation # PyTorch expects CHW
         # screen = self.crop_screen(screen)

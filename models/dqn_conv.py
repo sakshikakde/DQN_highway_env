@@ -4,9 +4,9 @@ sys.path.append(str(Path( __file__ ).parent.joinpath('..')))
 from common_utils import *
 
 class DQN(nn.Module):
-    def __init__(self, img_height, img_width):
+    def __init__(self, img_height, img_width, img_stack = 4):
         super().__init__()
-        self.fc1 = nn.Linear(in_features=img_height*img_width*3, out_features=24)   
+        self.fc1 = nn.Linear(in_features=img_height*img_width*img_stack, out_features=24)   
         self.fc2 = nn.Linear(in_features=24, out_features=32)
         self.out = nn.Linear(in_features=32, out_features=2)
 
