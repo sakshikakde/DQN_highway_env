@@ -3,6 +3,12 @@ from pathlib import Path
 sys.path.append(str(Path( __file__ ).parent.joinpath('..')))
 from env_manager import *
 
+def test_reset(em):
+    em.reset()
+    assert(em.current_screen is None)
+
+def test_num_actions(em):
+    assert(em.num_actions_available() == em.env.action_space.n)
 
 def test_init_data(em, device):
     screen = em.get_processed_screen().cpu().numpy()
@@ -29,5 +35,7 @@ if __name__ == "__main__":
     print("testing environment manager...")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     em = HighwayEnvManager(device)
+    test_reset(em)
+    test_num_actions(em)
     test_init_data(em, device)
     test_step_data(em, device)
