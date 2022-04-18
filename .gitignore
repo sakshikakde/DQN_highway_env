@@ -1,0 +1,10 @@
+*.jpg
+*.h5
+*.pyc
+/.vscode
+*.pth
+*.avi
+/snapshots
+/saliency
+/tf_logs
+/__pycache__
