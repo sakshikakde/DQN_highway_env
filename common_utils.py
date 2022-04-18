@@ -22,7 +22,7 @@ from agent import *
 from env_manager import *
 from q_value import *
 from opts import *
-from train import *
+# from train import *
 
 
 is_ipython = 'inline' in matplotlib.get_backend()
@@ -37,11 +37,13 @@ def plot(values, moving_avg_period):
     plt.plot(values)
 
     moving_avg = get_moving_average(moving_avg_period, values)
-    plt.plot(moving_avg)    
-    plt.pause(0.001)
-    print("Episode", len(values), "\n", \
-        moving_avg_period, "episode moving avg:", moving_avg[-1])
-    if is_ipython: display.clear_output(wait=True)
+    plt.plot(moving_avg) 
+    plt.show()
+    print("Here", moving_avg)   
+    # plt.pause(0.001)
+    # print("Episode", len(values), "\n", \
+    #     moving_avg_period, "episode moving avg:", moving_avg[-1])
+    # if is_ipython: display.clear_output(wait=True)
 
 
 def get_moving_average(period, values):

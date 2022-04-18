@@ -1,4 +1,5 @@
 from common_utils import *
+from train import *
 
 def main():
     opt = parse_opts()
@@ -22,8 +23,15 @@ def main():
     for episode in range(opt.num_episodes):
         print("--------- Starting Episode : ", episode, "---------")
         duration = train_epoch(opt, em, agent, policy_net, target_net, memory, device, optimizer, criterion)
+
         print(duration)
         episode_durations.append(duration)
+
+        moving_avg_period = 100
+        moving_avg = get_moving_average(moving_avg_period, episode_durations)
+        print("Episode", episode, "\n",
+        moving_avg_period, "episode moving avg:", moving_avg[-1])
+
         # plot(episode_durations, 100)
         if episode % opt.target_update == 0:
             target_net.load_state_dict(policy_net.state_dict())
