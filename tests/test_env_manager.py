@@ -17,7 +17,7 @@ def test_init_data(em, device):
     _, axes = plt.subplots(ncols=4, figsize=(12, 5))
     for i, ax in enumerate(axes.flat):
         ax.imshow(screen[0, i, ...].T, cmap=plt.get_cmap('gray'))
-    plt.savefig('./tests/test_init.png')
+    plt.savefig('./tests/images/test_init.png')
 
 def test_step_data(em, device):
     action = random.randrange(em.num_actions_available())
@@ -28,7 +28,7 @@ def test_step_data(em, device):
     _, axes = plt.subplots(ncols=4, figsize=(12, 5))
     for i, ax in enumerate(axes.flat):
         ax.imshow(screen[0, i, ...].T, cmap=plt.get_cmap('gray'))
-    plt.savefig('./tests/test_step.png')
+    plt.savefig('./tests/images/test_step.png')
 
 
 if __name__ == "__main__":
