@@ -1,3 +1,4 @@
+import os
 import gym
 import math
 import random
@@ -13,6 +14,8 @@ import torch.optim as optim
 import torch.nn.functional as F
 import torchvision.transforms as T   
 import highway_env
+import time
+import csv
 
 from models.dqn_conv import DQN as DQN
 from experience import *
