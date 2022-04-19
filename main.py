@@ -11,8 +11,8 @@ def main():
     agent = Agent(strategy, em.num_actions_available(), device)
     memory = ReplayMemory(opt.memory_size)\
     
-    policy_net = DQN(em.get_screen_height(), em.get_screen_width(), em.get_screen_stack()).to(device)
-    target_net = DQN(em.get_screen_height(), em.get_screen_width(), em.get_screen_stack()).to(device)
+    policy_net = DQN(em.get_screen_height(), em.get_screen_width(), em.get_screen_stack(), em.num_actions_available()).to(device)
+    target_net = DQN(em.get_screen_height(), em.get_screen_width(), em.get_screen_stack(), em.num_actions_available()).to(device)
     target_net.load_state_dict(policy_net.state_dict())
     target_net.eval()
 
