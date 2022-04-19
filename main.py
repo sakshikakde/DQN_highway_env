@@ -37,7 +37,7 @@ def main():
         moving_avg_period = 50
         moving_avg = get_moving_average(moving_avg_period, episode_durations)
         print("Episode", episode, "\n",
-        moving_avg_period, "episode moving avg:", moving_avg[-1])
+        moving_avg_period, "episode moving avg: ", moving_avg[-1], " | currect episode duration: ", duration)
 
         writer.writerow([moving_avg[-1]])
         # # plot(episode_durations, 100)
