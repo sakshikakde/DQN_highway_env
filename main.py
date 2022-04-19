@@ -1,4 +1,5 @@
 from common_utils import *
+from models.dqn_conv_v1 import DQN as DQN
 from train import *
 
 def main():
@@ -48,7 +49,7 @@ def main():
             timestamp = time.strftime('%b-%d-%Y_%H%M', time.localtime())
             torch.save(state, os.path.join(os.path.join(opt.save_folder, opt.env),
                                           f'{opt.env}-Epoch-{episode}-Duration-{ moving_avg[-1]}_{timestamp}.pth'))
-            print("Model saved with averahe duration ", moving_avg[-1])
+            print("Model saved with average duration ", moving_avg[-1])
 
     f.close()
     f = open(os.path.join(opt.save_folder, f'{timestamp}_duration.csv'), 'w')

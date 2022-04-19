@@ -3,7 +3,6 @@ from pathlib import Path
 sys.path.append(str(Path( __file__ ).parent.joinpath('..')))
 from common_utils import *
 
-
 class DQN(nn.Module):
     def __init__(self, img_height, img_width, img_stack = 4, num_actions = 2):
         super().__init__()

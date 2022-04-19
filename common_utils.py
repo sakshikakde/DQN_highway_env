@@ -17,7 +17,6 @@ import highway_env
 import time
 import csv
 
-from models.dqn_conv import DQN as DQN
 from experience import *
 from replay_mem import *
 from strategy import *
