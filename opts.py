@@ -15,10 +15,12 @@ def parse_opts():
     parser.add_argument('--memory_size', default=100000, type=int, help='replay memory size')
 
     parser.add_argument('--lr', default= 0.001, type=float, help='Learning rate')
-    parser.add_argument('--num_episodes', default=4, type=int, help='Number of episodes')
+    parser.add_argument('--num_episodes', default=3000, type=int, help='Number of episodes')
 
     parser.add_argument('--save_interval', type=int, default=100, help='Episodes after which the model should be saved')
     parser.add_argument('--save_folder', type=str, default='./snapshots', help='folder to save model')
+
+    parser.add_argument('--model_name', type=str, default='highway-v0-Epoch-1199-Duration-17.84000015258789_Apr-19-2022_0315.pth', help='Name of saved model')
 
     args = parser.parse_args()
 

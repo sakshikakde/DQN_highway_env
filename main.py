@@ -18,7 +18,7 @@ def main():
     em = HighwayEnvManager(device)
     strategy = EpsilonGreedyStrategy(opt.eps_start, opt.eps_end, opt.eps_decay)
     agent = Agent(strategy, em.num_actions_available(), device)
-    memory = ReplayMemory(opt.memory_size)\
+    memory = ReplayMemory(opt.memory_size)
     
     policy_net = DQN(em.get_screen_height(), em.get_screen_width(), em.get_screen_stack(), em.num_actions_available()).to(device)
     target_net = DQN(em.get_screen_height(), em.get_screen_width(), em.get_screen_stack(), em.num_actions_available()).to(device)
@@ -33,7 +33,7 @@ def main():
         duration = train_epoch(opt, em, agent, policy_net, target_net, memory, device, optimizer, criterion)
         episode_durations.append(duration)
 
-        moving_avg_period = 10
+        moving_avg_period = 50
         moving_avg = get_moving_average(moving_avg_period, episode_durations)
         print("Episode", episode, "\n",
         moving_avg_period, "episode moving avg:", moving_avg[-1])
