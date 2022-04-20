@@ -21,7 +21,7 @@ class DQN(nn.Module):
         self.conv7 = nn.Conv2d(128, 256, 3, padding='valid')
         self.conv8 = nn.Conv2d(256, 512, 3, padding='valid')
 
-        self.fc1 = nn.Linear(2560, 512)
+        self.fc1 = nn.Linear(13824, 512)
         self.fc2 = nn.Linear(512, 512)
         self.fc3 = nn.Linear(512, out_features=num_actions)
 

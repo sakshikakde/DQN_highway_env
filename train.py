@@ -24,4 +24,4 @@ def train_epoch(opt, em, agent, policy_net, target_net, memory, device, optimize
             optimizer.step()
         
         if em.done:
-            return(timestep)
+            return(timestep, reward.item())

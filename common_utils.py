@@ -24,6 +24,9 @@ from agent import *
 from env_manager import *
 from q_value import *
 from opts import *
+
+from IPython import display
+from pyvirtualdisplay import Display
 # from train import *
 
 
@@ -53,10 +56,12 @@ def get_moving_average(period, values):
     if len(values) >= period:
         moving_avg = values.unfold(dimension=0, size=period, step=1) \
             .mean(dim=1).flatten(start_dim=0)
-        moving_avg = torch.cat((torch.zeros(period-1), moving_avg))
+        # moving_avg = torch.cat((torch.zeros(period-1), moving_avg))
         return moving_avg.numpy()
     else:
-        moving_avg = torch.zeros(len(values))
+        moving_avg = values.unfold(dimension=0, size=len(values), step=1) \
+            .mean(dim=1).flatten(start_dim=0)
+        # moving_avg = torch.cat((torch.zeros(len(values)-1), moving_avg))
         return moving_avg.numpy()
 
 def extract_tensors(experiences):

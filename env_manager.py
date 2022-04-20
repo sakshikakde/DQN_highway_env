@@ -11,14 +11,18 @@ class HighwayEnvManager():
         self.done = False
 
     def configure(self):
+        screen_width, screen_height = 200, 100
         config = {
-        "observation": {
-            "type": "GrayscaleObservation",
-            "observation_shape": (128, 64),
-            "weights": [0.2989, 0.5870, 0.1140],
-            "stack_size": 4,
-        },
-        "policy_frequency": 2
+            "observation": {
+                "type": "GrayscaleObservation",
+                "weights": [0.9, 0.1, 0.5],  # weights for RGB conversion
+                "stack_size": 4,
+                "observation_shape": (screen_width, screen_height)
+            },
+            "screen_width": screen_width,
+            "screen_height": screen_height,
+            "scaling": 5.75,
+            "lanes_count":4,
         }
         self.env.configure(config)
 
