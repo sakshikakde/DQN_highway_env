@@ -1,5 +1,5 @@
 from common_utils import *
-from models.dqn_conv import DQN as DQN
+from models.dqn_conv_v1 import DQN as DQN
 
 
 def load_model(model_path, model, device):
@@ -20,13 +20,15 @@ def main():
 
     em.reset()
     state = em.get_state()
-    for _ in range(50):
+
+    for d in range(100):
         action = agent.select_action(state, policy_net)
         reward = em.take_action(action)
         next_state = em.get_state()
         state = next_state
-        em.render()
+        em.render(mode='rgb_array')
         if(em.done):
+            print("Reward : ", reward, " | Duration : ", d)
             break
 
     em.close()

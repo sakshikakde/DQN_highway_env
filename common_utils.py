@@ -25,14 +25,6 @@ from env_manager import *
 from q_value import *
 from opts import *
 
-from IPython import display
-from pyvirtualdisplay import Display
-# from train import *
-
-
-is_ipython = 'inline' in matplotlib.get_backend()
-if is_ipython: from IPython import display
-
 def plot(values, moving_avg_period):
     plt.figure(2)
     plt.clf()        
