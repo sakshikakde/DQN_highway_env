@@ -3,6 +3,7 @@ from common_utils import *
 def train_epoch(opt, em, agent, policy_net, target_net, memory, device, optimizer, criterion):
     em.reset()
     state = em.get_state()
+    loss_epoch = 0
     for timestep in count():
         action = agent.select_action(state, policy_net)
         reward = em.take_action(action)
@@ -19,9 +20,11 @@ def train_epoch(opt, em, agent, policy_net, target_net, memory, device, optimize
             target_q_values = ((next_q_values * opt.gamma) + rewards).type(torch.float32)
 
             loss = criterion(current_q_values, target_q_values.unsqueeze(1))
+            loss_epoch += loss.item()
+
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
         
         if em.done:
-            return(timestep, reward.item())
+            return(timestep, reward.item(), loss_epoch)

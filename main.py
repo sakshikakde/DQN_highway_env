@@ -12,8 +12,7 @@ def main():
         os.mkdir(os.path.join(opt.save_folder, opt.env))
 
     timestamp = time.strftime('%b-%d-%Y_%H%M', time.localtime())
-    f = open(os.path.join(opt.save_folder, f'{timestamp}_mv.csv'), 'w')
-    writer = csv.writer(f)
+    csv_file_name  = os.path.join(opt.save_folder, f'{timestamp}_stats.csv')
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     em = HighwayEnvManager(device)
@@ -30,32 +29,36 @@ def main():
     criterion = nn.MSELoss()
 
     episode_durations = []
+    episode_rewards = []
+    best_reward = 0
+    best_state = None
+
     for episode in range(opt.num_episodes):
-        duration = train_epoch(opt, em, agent, policy_net, target_net, memory, device, optimizer, criterion)
+        duration, reward, loss_epoch = train_epoch(opt, em, agent, policy_net, target_net, memory, device, optimizer, criterion)
         episode_durations.append(duration)
+        episode_rewards.append(reward)
 
+        write2csv(filename = csv_file_name, duration = duration, reward = reward, loss = loss_epoch)
         moving_avg_period = 50
-        moving_avg = get_moving_average(moving_avg_period, episode_durations)
+        avg_reward = get_moving_average(moving_avg_period, episode_rewards)
         print("Episode", episode, "\n",
-        moving_avg_period, "episode moving avg: ", moving_avg[-1], " | currect episode duration: ", duration)
+        moving_avg_period, "episode average reward: ", "{:.2f}".format(avg_reward[-1]), " | currect episode reward: ", "{:.2f}".format(reward), "| duration :", duration)
 
-        writer.writerow([moving_avg[-1]])
-        # # plot(episode_durations, 100)
+        state = {'epoch': episode, 'state_dict': policy_net.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
+
+        if avg_reward[-1] > best_reward:
+            best_reward = avg_reward[-1]
+            best_state = state
+
         if episode % opt.target_update == 0:
             target_net.load_state_dict(policy_net.state_dict())
         
         if episode % opt.save_interval == opt.save_interval - 1:
-            state = {'epoch': episode, 'state_dict': policy_net.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
             timestamp = time.strftime('%b-%d-%Y_%H%M', time.localtime())
-            torch.save(state, os.path.join(os.path.join(opt.save_folder, opt.env),
-                                          f'{opt.env}-Epoch-{episode}-Duration-{ moving_avg[-1]}_{timestamp}.pth'))
-            print("Model saved with average duration ", moving_avg[-1])
-
-    f.close()
-    f = open(os.path.join(opt.save_folder, f'{timestamp}_duration.csv'), 'w')
-    writer = csv.writer(f)
-    writer.writerow(episode_durations)
-    f.close()
+            torch.save(best_state, os.path.join(os.path.join(opt.save_folder, opt.env),
+                                          f'{opt.env}-Epoch-{episode}-Duration-{ avg_reward[-1]}_{timestamp}.pth'))
+            best_reward = 0
+            print("Model saved with average duration ", avg_reward[-1])
 
 if __name__ == "__main__":
 	main()

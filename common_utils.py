@@ -15,7 +15,7 @@ import torch.nn.functional as F
 import torchvision.transforms as T   
 import highway_env
 import time
-import csv
+import pandas as pd
 
 from experience import *
 from replay_mem import *
@@ -66,3 +66,7 @@ def extract_tensors(experiences):
     t4 = torch.cat(batch.next_state)
 
     return (t1,t2,t3,t4)
+
+def write2csv(filename, duration, reward, loss):
+    data = pd.DataFrame([[duration, reward, loss]])
+    data.to_csv(filename,  mode = 'a', index=False, header = False)
