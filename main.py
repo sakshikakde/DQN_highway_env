@@ -42,7 +42,7 @@ def main():
         moving_avg_period = 50
         avg_reward = get_moving_average(moving_avg_period, episode_rewards)
         print("Episode", episode, "\n",
-        moving_avg_period, "episode average reward: ", "{:.2f}".format(avg_reward[-1]), " | currect episode reward: ", "{:.2f}".format(reward), "| duration :", duration)
+        moving_avg_period, "episode average reward: ", "{:.4f}".format(avg_reward[-1]), " | currect episode reward: ", "{:.4f}".format(reward), "| duration :", duration)
 
         state = {'epoch': episode, 'state_dict': policy_net.state_dict(), 'optimizer_state_dict': optimizer.state_dict()}
 
@@ -56,9 +56,9 @@ def main():
         if episode % opt.save_interval == opt.save_interval - 1:
             timestamp = time.strftime('%b-%d-%Y_%H%M', time.localtime())
             torch.save(best_state, os.path.join(os.path.join(opt.save_folder, opt.env),
-                                          f'{opt.env}-Epoch-{episode}-Duration-{ avg_reward[-1]}_{timestamp}.pth'))
+                                          f'{opt.env}-Episode-{episode}-Reward-{ avg_reward[-1]}_{timestamp}.pth'))
+            print("Model saved with average reward ",best_reward)
             best_reward = 0
-            print("Model saved with average duration ", avg_reward[-1])
 
 if __name__ == "__main__":
 	main()
