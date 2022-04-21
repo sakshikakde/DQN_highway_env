@@ -25,22 +25,22 @@ from env_manager import *
 from q_value import *
 from opts import *
 
-def plot(values, moving_avg_period):
-    plt.figure(2)
-    plt.clf()        
-    plt.title('Training...')
-    plt.xlabel('Episode')
-    plt.ylabel('Duration')
-    plt.plot(values)
 
+def plot(values, moving_avg_period, opt, title = 'Training', y_label = 'Duration', name = 'plots/duration.png'):
+    plt.figure()
+    plt.title(title)
+    plt.xlabel('Episode')
+    plt.ylabel(y_label)
+    plt.plot(values)
     moving_avg = get_moving_average(moving_avg_period, values)
-    plt.plot(moving_avg) 
+    plt.plot(moving_avg)
+    plt.legend(['Actual vales', 'Averaged values']) 
+    if opt is None:
+        save_folder = './snapshots'
+    else:
+        save_folder = opt.save_folder
+    plt.savefig(os.path.join(save_folder, name))
     plt.show()
-    print("Here", moving_avg)   
-    # plt.pause(0.001)
-    # print("Episode", len(values), "\n", \
-    #     moving_avg_period, "episode moving avg:", moving_avg[-1])
-    # if is_ipython: display.clear_output(wait=True)
 
 
 def get_moving_average(period, values):

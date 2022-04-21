@@ -13,6 +13,8 @@ def main():
 
     timestamp = time.strftime('%b-%d-%Y_%H%M', time.localtime())
     csv_file_name  = os.path.join(opt.save_folder, f'{timestamp}_stats.csv')
+    cols = pd.DataFrame(columns=['Duration', 'Reward', 'Loss'])
+    cols.to_csv(csv_file_name,  mode = 'a', index=False)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     em = HighwayEnvManager(device)
