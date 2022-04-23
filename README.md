@@ -18,5 +18,5 @@ Refer the [doc](https://highway-env.readthedocs.io/en/latest/actions/index.html)
 The GrayscaleObservation is a W x H grayscale image of the scene, where W, H are set with the observation_shape parameter. The RGB to grayscale conversion is a weighted sum, configured by the weights parameter. Several images can be stacked with the stack_size parameter, as is customary with image observations. Refer the [doc](https://highway-env.readthedocs.io/en/latest/observations/index.html#grayscale-image) for more details.      
 
 #### Sample obeservation
-
+![alt test](https://github.com/sakshikakde/DQN_highway_env/blob/main/images/Screenshot%20from%202022-04-14%2003-54-55.png)
 
